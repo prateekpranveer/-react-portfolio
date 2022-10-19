@@ -9,11 +9,10 @@ import redux from "./assets/techstack/redux.png";
 import mui from "./assets/techstack/mui.png";
 import bootstrap from "./assets/techstack/bootstrap.png";
 import figma from "./assets/techstack/figma.png";
-import github from "./assets/link/github.png";
-import instagram from "./assets/link/instagram.svg";
-import linkedin from "./assets/link/linkedin.png";
-import profile from "../src/assets/profile.png";
-import { Typewriter } from "react-simple-typewriter";
+import Profile from "./components/Profile";
+import Coding from "./components/Coding";
+import Projects from "./components/Projects";
+import Contact from "./components/Contact";
 
 const stacks = [
   html,
@@ -52,8 +51,10 @@ const colors = [
   },
 ];
 const App = () => {
+  const Pages = [<Profile />, <Coding />, <Projects />, <Contact />];
+  const [Page, setPage] = useState(Pages[0]);
   const [Width, setWidth] = useState(window.innerWidth);
-  const [Theme, setTheme] = useState(colors[0]);
+  const [Theme, setTheme] = useState(colors[3]);
 
   const handleClick = (id) => {
     setTheme((Theme) => (Theme = colors[id]));
@@ -73,46 +74,16 @@ const App = () => {
       <MainDiv>
         <Division2 theme={Theme} props={Width}>
           <Details props={Width}>
-            <MainImg>
-              <Inside>
-                <img src={profile} alt="profile"></img>
-              </Inside>
-            </MainImg>
-            <h1>
-              Hi, I am <span>Prateek</span>
-            </h1>
-            <h2 props={Width}>
-              I am a{" "}
-              <span props={Theme}>
-                <Typewriter
-                  words={["React Developer", "Programmer", "Web Developer"]}
-                  loop={5}
-                >
-                  React Developer
-                </Typewriter>
-              </span>
-            </h2>
-            <button>Download Resume</button>
-            <Links>
-              <span>
-                <img src={linkedin} alt="linkedin"></img>
-              </span>
-              <span>
-                <img src={github} alt="github"></img>
-              </span>
-              <span>
-                <img src={instagram} alt="instagram"></img>
-              </span>
-            </Links>
+            <>{Page}</>
           </Details>
         </Division2>
 
         <Navlinks props={Width} theme={Theme}>
           <ul>
-            <li>Home</li>
-            <li>Coding</li>
-            <li>Projects</li>
-            <li>Contact</li>
+            <li onClick={() => setPage(Pages[0])}>Home</li>
+            <li onClick={() => setPage(Pages[1])}>Coding</li>
+            <li onClick={() => setPage(Pages[2])}>Projects</li>
+            <li onClick={() => setPage(Pages[3])}>Contact</li>
           </ul>
         </Navlinks>
         <Division theme={Theme} props={Width}>
@@ -247,9 +218,12 @@ const Navlinks = styled.div`
   }
 `;
 const Details = styled.div`
-  width: ${(props) => (props.props > 800 ? props.props / 4 : {})}px;
+  width: ${(props) =>
+    props.props > 800 ? props.props / 3 : props.props / 1.5}px;
   margin: auto;
-  padding-top: 140px;
+  overflow: hidden;
+  padding-top: 40px;
+  padding-bottom: 140px;
   display: flex;
   gap: 30px;
   flex-direction: column;
@@ -281,39 +255,6 @@ const Details = styled.div`
     border-radius: 2px;
     font-family: roboto mono;
     padding: 6px 22px;
-  }
-`;
-const Links = styled.div`
-  margin: auto;
-  display: flex;
-  gap: 12px;
-  img {
-    width: 50px;
-    height: 50px;
-  }
-`;
-
-const MainImg = styled.div`
-  width: 100px;
-  height: 100px;
-  overflow: hidden;
-`;
-
-const Inside = styled.div`
-  transition: 1s ease;
-  width: 100px;
-  height: 100px;
-  display: flex;
-  border: 2px solid gray;
-  background-color: #f3f3f3;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  overflow: hidden;
-  img {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
   }
 `;
 
